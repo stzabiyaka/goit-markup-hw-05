@@ -8,6 +8,8 @@
   --accent-color: #2196f3;
   --cards-gap: 30px;
   --icon-grey: #afb1b8;
+  --transition-duration: 250ms;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -124,6 +126,10 @@ img {
   letter-spacing: 0.02em;
 
   text-decoration: none;
+
+  transition-property: color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .site-nav-links > .item:first-child {
   margin-left: 93px;
@@ -131,25 +137,21 @@ img {
 .site-nav-links > .item:not(:last-child) {
   margin-right: 50px;
 }
-.site-nav-link::after {
+.site-nav-link.current::after {
   content: '';
   width: 100%;
+  height: 4px;
   position: absolute;
   bottom: -1px;
   left: 0;
-  opacity: 0;
 
-  border: 2px solid var(--accent-color);
+  background-color: var(--accent-color);
   border-radius: 2px;
 }
 .site-nav-link:hover,
 .site-nav-link:focus,
 .site-nav-link.current {
   color: var(--accent-color);
-}
-.site-nav-link.current::after,
-.site-nav-link:hover::after {
-  opacity: 1;
 }
 
 /* contacts */
@@ -172,6 +174,10 @@ img {
   letter-spacing: 0.02em;
 
   text-decoration: none;
+
+  transition-property: color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .icon-contacts {
   vertical-align: middle;
@@ -190,6 +196,10 @@ img {
   line-height: 1.71;
 
   text-decoration: none;
+
+  transition-property: color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .contacts-header-link:hover,
 .contacts-header-link:focus,
@@ -246,6 +256,7 @@ img {
   border-radius: 4px;
   color: var(--white-color);
   background-color: var(--accent-color);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
   font-family: inherit;
   font-weight: 700;
@@ -382,6 +393,10 @@ img {
 
   color: var(--icon-grey);
   border-radius: 50%;
+
+  transition-property: color, background-color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .icon-social {
   display: block;
@@ -418,6 +433,10 @@ img {
   border: 1px solid var(--icon-grey);
   border-radius: 4px;
   text-decoration: none;
+
+  transition-property: color, border-color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .clients-link:hover,
 .clients-link:focus {
@@ -429,6 +448,78 @@ img {
   fill: currentColor;
 }
 
+/* modal form */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  visibility: visible;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  transition-property: opacity, visibility;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
+}
+.modal-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 528px;
+  height: 581px;
+
+  background-color: var(--white-color);
+
+  transform: translate(-50%, -50%) scale(1);
+  transition-property: transform;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
+}
+.close-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  background-color: inherit;
+  color: #000;
+
+  transition-property: color, border-color, transform;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
+}
+.icon-close {
+  position: absolute;
+
+  fill: currentColor;
+}
+.close-button:hover,
+.close-button:focus {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: rotateZ(360deg);
+}
+.modal-backdrop.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 0;
+}
+.modal-backdrop.is-hidden > .modal-form {
+  transform: translate(-50%, -50%) scale(0);
+}
+/* portfolio */
 /* filter buttons */
 
 .filter-buttons {
@@ -455,6 +546,10 @@ img {
   line-height: 1.63;
   text-align: center;
   letter-spacing: 0.03em;
+
+  transition-property: color, background-color, box-shadow;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .filter-buttons > .item:not(:last-child) {
   padding-right: 8px;
@@ -487,12 +582,51 @@ img {
   margin-top: var(--cards-gap);
 
   background-color: var(--white-color);
+
+  transition-property: box-shadow;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
 }
 .examples-card:hover,
-.examples-card:focus {
+.examples-card .examples-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
 }
+.overlay-container {
+  position: relative;
+  overflow: hidden;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  padding-top: 63px;
+  padding-bottom: 63px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  background-color: var(--accent-color);
+
+  transform: translateY(100%);
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
+}
+.overlay-description {
+  color: var(--white-color);
+
+  font-size: 18px;
+  line-height: 1.56;
+}
+.examples-card:hover .overlay,
+.examples-link:focus .overlay {
+  transform: translateY(0);
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing);
+}
+
 .examples-card-content {
   padding-top: 20px;
   padding-bottom: 20px;

@@ -573,6 +573,7 @@ img {
 }
 .examples-link,
 .examples-link:visited {
+  display: block;
   text-decoration: none;
 }
 .examples-card {
